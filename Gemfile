@@ -9,3 +9,7 @@ gem "ruby 2.7.3"
 group :development, :test do
   gem "rspec"
 end
+
+group :development, :test do
+  gem 'rubocop', '1.20'
+end
