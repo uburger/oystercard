@@ -37,14 +37,25 @@ describe Oystercard do
 
     it 'checks if in_journey? method works when touched in' do
       subject.top_up(Oystercard::MAX_LIMIT)
-      subject.touch_in
- 
+      station = Station.new
+      subject.touch_in(station)
+      
       expect(subject.in_journey).to be true
     end
 
     it 'don`t allow touch in if balance under minimum limit' do
       subject.top_up(Oystercard::MIN_FARE - 0.01)
-      expect { subject.touch_in }.to raise_error "Not enough funds!"
+      station = Station.new
+
+      expect { subject.touch_in(station) }.to raise_error "Not enough funds!"
+    end
+
+    it 'remember the entry station on the card when you touch in' do
+      subject.top_up(Oystercard::MAX_LIMIT)
+      euston = Station.new
+      subject.touch_in(euston)
+
+      expect(subject.entry_station).to eq euston
     end
 
   end
@@ -56,7 +67,8 @@ describe Oystercard do
 
     it 'checks if in_journey? method works when touched out' do
       subject.top_up(Oystercard::MAX_LIMIT)
-      subject.touch_in
+      station = Station.new
+      subject.touch_in(station)
       subject.touch_out
 
       expect(subject.in_journey).to be false
