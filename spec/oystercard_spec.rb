@@ -1,10 +1,15 @@
 require 'oystercard'
 
 describe Oystercard do 
-  describe '#balance' do 
+  describe '#initialize' do 
     it 'checks if initial balance is zero' do 
       expect(subject.balance).to eq 0
     end
+
+    it 'checks if new card is touched out' do
+      expect(subject.in_journey).to be false
+    end
+
   end
 
   describe '#top_up' do
@@ -62,7 +67,7 @@ describe Oystercard do
 
       expect(subject.in_journey).to be false
      end
-     
+
   end
 
 end
