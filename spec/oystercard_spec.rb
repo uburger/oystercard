@@ -43,6 +43,12 @@ describe Oystercard do
       expect(subject).to respond_to(:touch_in)
     end
 
+    it 'checks if in_journey? method works when touched in' do
+      subject.touch_in
+ 
+      expect(subject.in_journey).to be true
+    end
+
   end
 
   describe '#touch_out' do 
@@ -50,16 +56,13 @@ describe Oystercard do
       expect(subject).to respond_to(:touch_out)
     end
 
+    it 'checks if in_journey? method works when touched out' do
+      subject.touch_in
+      subject.touch_out
+
+      expect(subject.in_journey).to be false
+     end
+     
   end
-
-  describe '#in_journey?' do 
-    it 'checks if in_journey? method works on the card' do
-     subject.touch_in
-
-     expect(subject.in_journey).to be true
-    end
-
-  end
-  
 
 end
