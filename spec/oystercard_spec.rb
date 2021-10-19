@@ -80,6 +80,16 @@ describe Oystercard do
       expect { subject.touch_out }.to change { subject.balance }.by -Oystercard::MIN_FARE
     end
 
+    it 'forget the entry station when touching out' do
+      subject.top_up(Oystercard::MAX_LIMIT)
+      station = Station.new
+      subject.touch_in(station)
+      subject.touch_out
+
+      expect(subject.entry_station).to eq nil
+      
+    end
+
   end
 
 end
