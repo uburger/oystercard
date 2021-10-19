@@ -49,9 +49,14 @@ describe Oystercard do
     end
 
     it 'checks if in_journey? method works when touched in' do
+      subject.top_up(Oystercard::MAX_LIMIT)
       subject.touch_in
  
       expect(subject.in_journey).to be true
+    end
+
+    it 'don`t allow touch in if balance under minimum limit' do
+      expect { subject.touch_in } .to raise_error "Not enough funds!"
     end
 
   end
@@ -62,6 +67,7 @@ describe Oystercard do
     end
 
     it 'checks if in_journey? method works when touched out' do
+      subject.top_up(Oystercard::MAX_LIMIT)
       subject.touch_in
       subject.touch_out
 

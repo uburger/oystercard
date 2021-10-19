@@ -1,5 +1,6 @@
 class Oystercard
   MAX_LIMIT = 90
+  MIN_FARE = 1
   attr_reader :balance, :in_journey
 
   def initialize
@@ -20,6 +21,7 @@ class Oystercard
   end
 
   def touch_in
+    fail "Not enough funds!" unless @balance > MIN_FARE
     puts "Barrier is now open - you may enter"
     @in_journey = true
   end
