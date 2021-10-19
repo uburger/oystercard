@@ -9,11 +9,8 @@ class Oystercard
   end
 
   def top_up(cash)
-    if (@balance + cash) > MAX_LIMIT
-      fail "Can't top up above #{MAX_LIMIT}£" 
-    else
-      return @balance += cash
-    end
+    fail "Can't top up above #{MAX_LIMIT}£" if (@balance + cash) > MAX_LIMIT
+    @balance += cash
   end
 
   def touch_in
@@ -26,8 +23,10 @@ class Oystercard
     puts "Barrier is now open - you may exit"
     @in_journey = false
 
-  deduct(MIN_FARE)
+    deduct(MIN_FARE)
   end
+
+private
 
   def deduct(fare)
     @balance -= fare

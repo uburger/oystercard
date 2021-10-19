@@ -27,19 +27,6 @@ describe Oystercard do
       
       expect { card.top_up(1) }.to raise_error "Can't top up above #{Oystercard::MAX_LIMIT}£"
     end
-  end
-
-  describe '#deduct' do 
-    it 'checks if deduct takes argument' do
-      expect(subject).to respond_to(:deduct).with(1).argument
-    end
-    
-    it 'deduct fare from the balance' do 
-      subject.top_up(10)
-
-      expect { subject.deduct(5) }.to change { subject.balance }.by -5
-  
-    end
 
   end
 
@@ -57,7 +44,7 @@ describe Oystercard do
 
     it 'don`t allow touch in if balance under minimum limit' do
       subject.top_up(Oystercard::MIN_FARE - 0.01)
-      expect { subject.touch_in } .to raise_error "Not enough funds!"
+      expect { subject.touch_in }.to raise_error "Not enough funds!"
     end
 
   end
