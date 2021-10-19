@@ -56,6 +56,7 @@ describe Oystercard do
     end
 
     it 'don`t allow touch in if balance under minimum limit' do
+      subject.top_up(Oystercard::MIN_FARE - 0.01)
       expect { subject.touch_in } .to raise_error "Not enough funds!"
     end
 
@@ -72,7 +73,13 @@ describe Oystercard do
       subject.touch_out
 
       expect(subject.in_journey).to be false
-     end
+    end
+
+    it 'Charge the card at the end of a journey when you touch out' do
+      subject.top_up(Oystercard::MAX_LIMIT)
+
+      expect { subject.touch_out }.to change { subject.balance }.by -Oystercard::MIN_FARE
+    end
 
   end
 

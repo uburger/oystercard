@@ -16,10 +16,6 @@ class Oystercard
     end
   end
 
-  def deduct(fare)
-    @balance -= fare
-  end
-
   def touch_in
     fail "Not enough funds!" unless @balance > MIN_FARE
     puts "Barrier is now open - you may enter"
@@ -29,7 +25,12 @@ class Oystercard
   def touch_out
     puts "Barrier is now open - you may exit"
     @in_journey = false
+
+  deduct(MIN_FARE)
   end
 
+  def deduct(fare)
+    @balance -= fare
+  end
 
 end
