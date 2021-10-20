@@ -1,4 +1,5 @@
 require 'oystercard'
+require 'journey'
 
 describe Oystercard do 
   describe '#initialize' do 
@@ -100,6 +101,18 @@ describe Oystercard do
 
       expect(subject.exit_station).to eq romford  
     end 
+
+    it 'checks that touch in and touch out creates one journey' do
+      subject.top_up(Oystercard::MAX_LIMIT)
+      journey = Journey.new
+      euston = Station.new
+      romford = Station.new
+      subject.touch_in(euston)
+      subject.touch_out(romford)
+
+      expect(subject.journey.journey_list).to include({ :entry_station => euston, :exit_station => romford })
+      
+    end
 
   end
 

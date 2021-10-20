@@ -1,15 +1,19 @@
 require 'station'
-require 'journey'
+require_relative 'journey'
 
 class Oystercard
   MAX_LIMIT = 90
   MIN_FARE = 1
-  attr_reader :balance, :entry_station, :exit_station
+  attr_reader :balance
+  attr_accessor :journey, :trip, :entry_station, :exit_station
 
   def initialize
     @balance = 0
     @entry_station = nil
     @exit_station = nil
+    @trip = {}
+    @journey = Journey.new
+  
   end
 
   def top_up(cash)
@@ -24,8 +28,10 @@ class Oystercard
 
   def touch_out(station)  
     deduct(MIN_FARE)
-    @entry_station = nil
     @exit_station = station
+    @trip = { :entry_station => @entry_station, :exit_station => @exit_station }
+    p @journey.journey_list.push(@trip)
+    @entry_station = nil
   end
 
   def in_journey
