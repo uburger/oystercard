@@ -69,26 +69,37 @@ describe Oystercard do
       subject.top_up(Oystercard::MAX_LIMIT)
       station = Station.new
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station)
 
       expect(subject.in_journey).to be false
     end
 
     it 'Charge the card at the end of a journey when you touch out' do
       subject.top_up(Oystercard::MAX_LIMIT)
+      station = Station.new
 
-      expect { subject.touch_out }.to change { subject.balance }.by -Oystercard::MIN_FARE
+      expect { subject.touch_out(station) }.to change { subject.balance }.by -Oystercard::MIN_FARE
     end
 
     it 'forget the entry station when touching out' do
       subject.top_up(Oystercard::MAX_LIMIT)
       station = Station.new
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station)
 
       expect(subject.entry_station).to eq nil
       
     end
+
+    it 'remember the exit station on the card when you touch out' do
+      subject.top_up(Oystercard::MAX_LIMIT)
+      euston = Station.new
+      romford = Station.new
+      subject.touch_in(euston)
+      subject.touch_out(romford)
+
+      expect(subject.exit_station).to eq romford  
+    end 
 
   end
 

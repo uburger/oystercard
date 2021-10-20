@@ -1,13 +1,15 @@
 require 'station'
+require 'journey'
 
 class Oystercard
   MAX_LIMIT = 90
   MIN_FARE = 1
-  attr_reader :balance, :entry_station 
+  attr_reader :balance, :entry_station, :exit_station
 
   def initialize
     @balance = 0
     @entry_station = nil
+    @exit_station = nil
   end
 
   def top_up(cash)
@@ -17,14 +19,13 @@ class Oystercard
 
   def touch_in(station)
     fail "Not enough funds!" unless @balance > MIN_FARE
-    puts "Barrier is now open - you may enter"
     @entry_station = station 
   end
 
-  def touch_out
-    puts "Barrier is now open - you may exit"   
+  def touch_out(station)  
     deduct(MIN_FARE)
     @entry_station = nil
+    @exit_station = station
   end
 
   def in_journey
