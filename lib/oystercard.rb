@@ -4,7 +4,7 @@ require_relative 'journey'
 class Oystercard
   MAX_LIMIT = 90
   MIN_FARE = 1
-  attr_reader :balance
+  attr_reader :balance 
   attr_accessor :journey, :trip, :entry_station, :exit_station
 
   def initialize
@@ -30,7 +30,7 @@ class Oystercard
     deduct(MIN_FARE)
     @exit_station = station
     @trip = { :entry_station => @entry_station, :exit_station => @exit_station }
-    p @journey.journey_list.push(@trip)
+    @journey.journey_list.push(@trip)
     @entry_station = nil
   end
 

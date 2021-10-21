@@ -4,6 +4,5 @@ class Journey
 
   def initialize
     @journey_list = []
-
   end
 end
